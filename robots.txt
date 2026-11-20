@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://neo970720.github.io/shopify-fee-calculator/sitemap.xml

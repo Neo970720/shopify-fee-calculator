@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shopify Fee, ROAS &amp; Break-Even Calculator (2026 rates) — Sheetwright</title>
+<meta name="description" content="Free Shopify fee calculator with 2026 plan rates. See the real fee per order, your break-even ROAS and what a dollar of ads actually keeps. No sign-up.">
+<meta name="theme-color" content="#0E1B2C">
+<link rel="canonical" href="https://neo970720.github.io/shopify-fee-calculator/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Shopify Fee, ROAS &amp; Break-Even Calculator (2026 rates)">
+<meta property="og:description" content="Free Shopify fee calculator with 2026 plan rates. See the real fee per order, your break-even ROAS and what a dollar of ads actually keeps. No sign-up.">
+<meta property="og:url" content="https://neo970720.github.io/shopify-fee-calculator/">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Shopify Fee, ROAS & Break-Even Calculator","url":"https://neo970720.github.io/shopify-fee-calculator/","applicationCategory":"BusinessApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","description":"Free Shopify fee calculator with 2026 plan rates. See the real fee per order, your break-even ROAS and what a dollar of ads actually keeps.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@type":"Organization","name":"Sheetwright"}}
+</script>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230E1B2C'/%3E%3Cpath d='M8 21.5 13 10h6l5 11.5h-3.4l-1-2.6h-7.2l-1 2.6z' fill='%230B7A63'/%3E%3C/svg%3E">
+<style>
+:root{
+  --navy:#0E1B2C; --ink:#1B2634; --body:#2B3848; --muted:#6C7A8C;
+  --line:#E2E8F0; --soft:#F6F8FB; --card:#FFFFFF; --bg:#F1F4F8;
+  --accent:#0B7A63; --accent-soft:#E7F2EF; --amber:#A9741A; --red:#AF3A2C;
+  --input:#FFFDF7; --shadow:0 1px 2px rgba(16,24,40,.06),0 12px 28px -12px rgba(16,24,40,.18);
+}
+[data-theme="dark"]{
+  --navy:#0B1420; --ink:#E8EEF5; --body:#C4D0DC; --muted:#8A9AAB;
+  --line:#25323F; --soft:#121C27; --card:#0F1922; --bg:#080F16;
+  --accent:#3FB89A; --accent-soft:#12302A; --amber:#D9A441; --red:#E0715F;
+  --input:#0C151E; --track:#1B2937; --shadow:0 1px 2px rgba(0,0,0,.5),0 18px 40px -18px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+button,input,select,textarea{font-family:inherit}
+html,body{margin:0;padding:0}
+body{
+  background:var(--bg); color:var(--body);
+  font-family:"Liberation Sans","DejaVu Sans","Helvetica Neue",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased; line-height:1.5;
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+header.top{
+  background:var(--navy); color:#fff; padding:14px 0; position:sticky; top:0; z-index:10;
+}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{font-size:11px;letter-spacing:.14em;font-weight:700;color:#9FB4C2}
+.brand b{color:#fff;letter-spacing:.14em}
+.brand .sep{opacity:.5;margin:0 8px}
+.theme{
+  border:1px solid rgba(255,255,255,.22); background:transparent; color:#DCE6EE;
+  border-radius:999px; padding:7px 13px; font-size:12px; cursor:pointer; min-height:36px;
+}
+.theme:hover{background:rgba(255,255,255,.08)}
+.hero{padding:38px 0 10px}
+.hero h1{font-size:34px;line-height:1.15;color:var(--ink);margin:0 0 10px;letter-spacing:-.02em}
+.hero p{margin:0;color:var(--muted);font-size:16px;max-width:640px}
+.badge{
+  display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;
+  color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:5px 11px;margin-bottom:14px;
+  letter-spacing:.04em;
+}
+.badge i{width:6px;height:6px;border-radius:50%;background:var(--accent);display:block}
+.grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:22px;margin:26px 0 28px;align-items:start}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:22px}
+h2{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-weight:700}
+.plan{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px}
+.plan button{
+  border:1px solid var(--line);background:var(--soft);color:var(--body);border-radius:10px;
+  padding:10px 6px;font-size:13.5px;font-weight:600;cursor:pointer;min-height:52px;
+}
+.plan button small{display:block;font-size:10.5px;font-weight:600;color:var(--muted);margin-top:2px}
+.plan button[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.plan button[aria-pressed="true"] small{color:var(--accent)}
+.cycle{display:flex;gap:8px;margin:10px 0 18px}
+.cycle button{
+  flex:1;border:1px solid var(--line);background:var(--soft);color:var(--body);border-radius:9px;
+  padding:8px;font-size:12.5px;cursor:pointer;min-height:40px;
+}
+.cycle button[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);font-weight:700}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
+.field label{display:block;font-size:11.5px;color:var(--muted);margin-bottom:4px;font-weight:600}
+.field .box{position:relative}
+.field input{
+  width:100%;padding:10px 30px 10px 11px;border:1px solid var(--line);border-radius:9px;
+  background:var(--input);color:var(--ink);font-size:14.5px;font-variant-numeric:tabular-nums;
+}
+.field input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.field .unit{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;color:var(--muted);pointer-events:none}
+.field.full{grid-column:1/-1}
+.hint{font-size:11px;color:var(--muted);margin:12px 0 0}
+.results .lead{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.big{font-size:44px;font-weight:800;color:var(--ink);letter-spacing:-.03em;line-height:1.05;margin:4px 0 2px;font-variant-numeric:tabular-nums}
+.big small{font-size:15px;font-weight:600;color:var(--muted);letter-spacing:0}
+.sub{font-size:13px;color:var(--muted);margin-bottom:16px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 16px}
+.kpi{background:var(--soft);border-radius:11px;padding:11px 12px}
+.kpi span{display:block;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.kpi b{display:block;font-size:20px;color:var(--ink);margin-top:3px;font-variant-numeric:tabular-nums}
+.kpi b.good{color:var(--accent)} .kpi b.bad{color:var(--red)}
+.bars{margin:6px 0 4px}
+.bar{display:grid;grid-template-columns:118px 1fr 68px;gap:8px;align-items:center;font-size:12.5px;margin:6px 0;color:var(--body)}
+.bar .track{display:block;height:7px;background:var(--track,var(--soft));border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+.bar .fill{display:block;height:100%;background:var(--accent);border-radius:99px;min-width:2px}
+.bar .fill.dim{background:#9FB4C2}
+[data-theme="dark"] .bar .fill.dim{background:#38505F}
+[data-theme="light"] .bar .track{background:#EDF1F6}
+.bar em{font-style:normal;text-align:right;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+.note{font-size:11.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;margin-top:14px}
+.month{margin-top:6px;border-collapse:collapse;width:100%;font-size:13px}
+.month td{padding:7px 0;border-bottom:1px solid var(--line)}
+.month td:last-child{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+.month tr:last-child td{border-bottom:none;padding-top:10px;font-weight:800}
+.month tr:last-child td:last-child{color:var(--accent);font-size:15px}
+.explain{margin:0 0 30px}
+.explain h2{margin-bottom:10px}
+.explain p{font-size:14px;color:var(--body);margin:0 0 10px}
+.explain .cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+code{background:var(--soft);padding:2px 6px;border-radius:5px;font-size:12.5px;color:var(--ink)}
+footer{border-top:1px solid var(--line);padding:22px 0 40px;font-size:12px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;gap:8px 22px;justify-content:space-between}
+.upsell{background:var(--navy);color:#D5E1EA;border-radius:16px;padding:20px 22px;margin:0 0 26px}
+.upsell b{color:#fff}
+.upsell a{color:#7FD3BE;text-decoration:none;font-weight:700}
+.upsell a:hover{text-decoration:underline}
+.upsell .cta{display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:var(--accent);color:#fff;border-radius:10px;padding:11px 18px;font-size:14.5px;font-weight:700;min-height:44px}
+.upsell .cta:hover{background:#0F9076;text-decoration:none}
+footer a{color:var(--accent);font-weight:600;text-decoration:none}
+footer a:hover{text-decoration:underline}
+@media (max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .hero h1{font-size:27px}
+  .explain .cols{grid-template-columns:1fr}
+  .big{font-size:38px}
+}
+@media (max-width:430px){
+  .fields{grid-template-columns:1fr}
+  .plan{grid-template-columns:repeat(2,1fr)}
+  .kpis{grid-template-columns:1fr 1fr}
+  .bar{grid-template-columns:96px 1fr 62px;font-size:12px}
+  .wrap{padding:0 14px}
+  .card{padding:16px;border-radius:13px}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><b>SHEETWRIGHT</b><span class="sep">/</span>FREE TOOL</div>
+    <button class="theme" id="themeBtn" type="button" aria-label="Switch colour theme">Dark mode</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="badge"><i></i>2026 SHOPIFY RATES · VERIFIED 20 NOV 2026</span>
+    <h1>Shopify fee, ROAS &amp; break-even calculator</h1>
+    <p>What one order really costs on your plan — and the ROAS at which your ads stop paying for themselves.</p>
+  </section>
+
+  <div class="grid">
+    <section class="card" aria-label="Inputs">
+      <h2>Your plan</h2>
+      <div class="plan" id="planGroup" role="group" aria-label="Shopify plan">
+        <button type="button" data-plan="Basic" aria-pressed="true">Basic<small>2.9% + 30¢</small></button>
+        <button type="button" data-plan="Grow" aria-pressed="false">Grow<small>2.7% + 30¢</small></button>
+        <button type="button" data-plan="Advanced" aria-pressed="false">Advanced<small>2.5% + 30¢</small></button>
+        <button type="button" data-plan="Plus" aria-pressed="false">Plus<small>2.25% + 30¢</small></button>
+      </div>
+      <div class="cycle" role="group" aria-label="Billing cycle">
+        <button type="button" data-cycle="monthly" aria-pressed="true">Pay monthly</button>
+        <button type="button" data-cycle="yearly" aria-pressed="false">Pay yearly</button>
+      </div>
+
+      <h2>One order</h2>
+      <div class="fields">
+        <div class="field"><label for="price">Item price</label><div class="box"><input id="price" type="number" min="0" step="1" value="100"><span class="unit">$</span></div></div>
+        <div class="field"><label for="shipping">Shipping charged</label><div class="box"><input id="shipping" type="number" min="0" step="1" value="10"><span class="unit">$</span></div></div>
+        <div class="field"><label for="discount">Discount</label><div class="box"><input id="discount" type="number" min="0" step="1" value="0"><span class="unit">$</span></div></div>
+        <div class="field"><label for="tax">Sales tax rate</label><div class="box"><input id="tax" type="number" min="0" max="30" step="0.1" value="0"><span class="unit">%</span></div></div>
+        <div class="field"><label for="cogs">Product cost (COGS)</label><div class="box"><input id="cogs" type="number" min="0" step="1" value="32"><span class="unit">$</span></div></div>
+        <div class="field"><label for="packaging">Packaging</label><div class="box"><input id="packaging" type="number" min="0" step="0.5" value="1.5"><span class="unit">$</span></div></div>
+        <div class="field"><label for="shipcost">Shipping label</label><div class="box"><input id="shipcost" type="number" min="0" step="0.5" value="8"><span class="unit">$</span></div></div>
+        <div class="field"><label for="pickpack">Pick &amp; pack</label><div class="box"><input id="pickpack" type="number" min="0" step="0.5" value="2.5"><span class="unit">$</span></div></div>
+        <div class="field"><label for="intl">International orders</label><div class="box"><input id="intl" type="number" min="0" max="100" step="1" value="10"><span class="unit">%</span></div></div>
+        <div class="field"><label for="premium">Premium cards</label><div class="box"><input id="premium" type="number" min="0" max="100" step="1" value="12"><span class="unit">%</span></div></div>
+      </div>
+
+      <h2 style="margin-top:20px">The month</h2>
+      <div class="fields">
+        <div class="field"><label for="orders">Orders per month</label><div class="box"><input id="orders" type="number" min="0" step="1" value="120"></div></div>
+        <div class="field"><label for="adspend">Ad spend per month</label><div class="box"><input id="adspend" type="number" min="0" step="10" value="1800"><span class="unit">$</span></div></div>
+        <div class="field full"><label for="roas">Your blended ROAS (revenue ÷ ad spend)</label><div class="box"><input id="roas" type="number" min="0" step="0.1" value="2.8"><span class="unit">×</span></div></div>
+      </div>
+      <p class="hint">Amounts in USD. Rates: Shopify Payments United States, published pricing. Tax you collect is not revenue, but Shopify's percentage is charged on it — included above.</p>
+    </section>
+
+    <section class="card results" aria-label="Results" aria-live="polite">
+      <div class="lead">You keep, per order</div>
+      <div class="big" id="netBig">$0.00</div>
+      <div class="sub" id="netSub">after Shopify fees and your costs, before ads</div>
+
+      <div class="kpis">
+        <div class="kpi"><span>Shopify fee</span><b id="kFee">—</b></div>
+        <div class="kpi"><span>Effective fee rate</span><b id="kRate">—</b></div>
+        <div class="kpi"><span>Break-even ROAS</span><b id="kBep">—</b></div>
+        <div class="kpi"><span>POAS at your ROAS</span><b id="kPoas">—</b></div>
+      </div>
+
+      <div class="bars" aria-label="Fee breakdown">
+        <div class="bar"><span>Card — standard</span><span class="track"><span class="fill" id="barStd" style="width:0%"></span></span><em id="vStd">$0.00</em></div>
+        <div class="bar"><span>International +1%</span><span class="track"><span class="fill" id="barIntl" style="width:0%"></span></span><em id="vIntl">$0.00</em></div>
+        <div class="bar"><span>Premium mix</span><span class="track"><span class="fill" id="barPrem" style="width:0%"></span></span><em id="vPrem">$0.00</em></div>
+        <div class="bar"><span>Fixed 30¢</span><span class="track"><span class="fill" id="barFix" style="width:0%"></span></span><em id="vFix">$0.00</em></div>
+      </div>
+
+      <table class="month" aria-label="Monthly projection">
+        <tr><td>Revenue (item + shipping − discount)</td><td id="mRev">—</td></tr>
+        <tr><td>Shopify fees</td><td id="mFee">—</td></tr>
+        <tr><td>COGS, packaging, shipping &amp; pick-pack</td><td id="mCost">—</td></tr>
+        <tr><td>Ads</td><td id="mAds">—</td></tr>
+        <tr><td>Subscription (<span id="planName">Basic</span>, <span id="cycleName">monthly</span>)</td><td id="mSub">—</td></tr>
+        <tr><td>What you keep this month</td><td id="mNet">—</td></tr>
+      </table>
+
+      <p class="note" id="verdict">A dollar of ads has to return <b>—</b> in revenue before it pays for itself.</p>
+    </section>
+  </div>
+
+  <section class="upsell">
+    <b>This is the one-order view.</b> The paid edition, <b>Shopify True Profit OS</b>, does it for every order:
+    200 rows, plan-aware fees, COGS by SKU, monthly ad spend, ROAS / POAS / break-even by month and by product,
+    a quarterly tax reserve and a fee watch with sources. The Etsy edition does the same for Etsy stores.
+    <div><a class="cta" href="https://sheetwrightstudio.gumroad.com/l/shopify-true-profit-os-2026">Get Shopify True Profit OS — $49</a></div>
+  </section>
+
+  <section class="card explain">
+    <h2>How the numbers are calculated</h2>
+    <div class="cols">
+      <div>
+        <p><b>Shopify fee.</b> The percentage is charged on the order total — item, shipping and sales tax — and the
+        30¢ fixed part is charged once per order. International cards add 1%; premium cards are blended by the share
+        you enter.</p>
+        <p><code>fee = (total × (std + intl×share + premium×share)) + 0.30</code></p>
+        <p><b>Break-even ROAS.</b> The ROAS at which ad profit is exactly zero. It depends on your margin, not your
+        category, so it is different for every store.</p>
+        <p><code>BEP ROAS = revenue ÷ (revenue − fees − COGS − shipping)</code></p>
+      </div>
+      <div>
+        <p><b>POAS.</b> Profit per ad dollar — <code>(revenue − fees − COGS − shipping) ÷ ad spend</code>. Above 1.00
+        the ads paid for themselves; below 1.00 they bought revenue at a loss.</p>
+        <p><b>Why ROAS flatters you.</b> A 3.0× ROAS on a 25% margin store is break-even at best. The platform reports
+        revenue, not profit.</p>
+        <p><b>Refunds.</b> Shopify keeps the card fee when you refund, so a refunded month shows a higher effective
+        fee rate. This calculator models fees on the gross order, the way Shopify charges them.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Rates: Shopify's published US pricing, verified 20 November 2026. Not affiliated with Shopify Inc.</span>
+    <span>© 2026 Sheetwright · Free to use and share · <a href="https://sheetwrightstudio.gumroad.com/l/shopify-true-profit-os-2026">Shopify True Profit OS</a></span>
+  </div>
+</footer>
+
+<script>
+const PLANS = {
+  "Basic": {
+    "monthly": 39.0,
+    "yearly": 29.0,
+    "std": 0.029,
+    "premium": 0.035
+  },
+  "Grow": {
+    "monthly": 105.0,
+    "yearly": 79.0,
+    "std": 0.027,
+    "premium": 0.033
+  },
+  "Advanced": {
+    "monthly": 399.0,
+    "yearly": 299.0,
+    "std": 0.025,
+    "premium": 0.031
+  },
+  "Plus": {
+    "monthly": 2300.0,
+    "yearly": 2300.0,
+    "std": 0.0225,
+    "premium": 0.0295
+  }
+};
+const CARD_FIXED = 0.30;
+const ALONGSIDE = 0.0125;
+
+const $ = (id) => document.getElementById(id);
+const money = (n) => "$" + (Math.round(n * 100) / 100).toLocaleString("en-US", {minimumFractionDigits:2, maximumFractionDigits:2});
+const pct = (n) => (n * 100).toFixed(1) + "%";
+const num = (el, fallback=0) => {
+  const v = parseFloat(el.value);
+  return Number.isFinite(v) ? v : fallback;
+};
+
+let state = {plan: "Basic", cycle: "monthly"};
+
+function computeFee(o) {
+  const plan = PLANS[o.plan];
+  const subtotal = Math.max(0, o.price - o.discount);
+  const tax = subtotal * (o.tax / 100);
+  const total = subtotal + o.shipping + tax;
+  const std = total * plan.std;
+  const intl = total * (plan.std * 0 + 0.01) * (o.intl / 100);
+  const prem = total * (plan.premium - plan.std) * (o.premium / 100);
+  const fee = Math.round((std + intl + prem) * 100) / 100 + CARD_FIXED;
+  return {subtotal, tax, total, std, intl, prem, fee: Math.round(fee * 100) / 100, plan};
+}
+
+function calculate() {
+  const o = {
+    plan: state.plan,
+    price: num($("price"), 0),
+    shipping: num($("shipping"), 0),
+    discount: num($("discount"), 0),
+    tax: num($("tax"), 0),
+    cogs: num($("cogs"), 0),
+    packaging: num($("packaging"), 0),
+    shipcost: num($("shipcost"), 0),
+    pickpack: num($("pickpack"), 0),
+    intl: Math.min(100, Math.max(0, num($("intl"), 0))),
+    premium: Math.min(100, Math.max(0, num($("premium"), 0))),
+  };
+  const f = computeFee(o);
+  const revenue = f.subtotal + o.shipping;
+  const productCost = o.cogs + o.packaging + o.shipcost + o.pickpack;
+  const contribution = revenue - f.fee - productCost;
+  const margin = revenue > 0 ? contribution / revenue : 0;
+  const bep = margin > 0 ? 1 / margin : Infinity;
+
+  const orders = Math.max(0, Math.round(num($("orders"), 0)));
+  const adspend = Math.max(0, num($("adspend"), 0));
+  const roas = Math.max(0, num($("roas"), 0));
+  const adPerOrder = orders > 0 ? adspend / orders : 0;
+  const poas = adPerOrder > 0 ? contribution / adPerOrder : 0;
+
+  $("netBig").textContent = money(contribution);
+  $("netSub").textContent = margin > 0
+    ? "after Shopify fees and your costs — a " + pct(margin) + " margin, before ads"
+    : "this order loses money before you spend a cent on ads";
+
+  $("kFee").textContent = money(f.fee);
+  $("kRate").textContent = pct(revenue > 0 ? f.fee / revenue : 0);
+  $("kBep").textContent = Number.isFinite(bep) ? bep.toFixed(2) + "×" : "—";
+  $("kPoas").textContent = adPerOrder > 0 ? poas.toFixed(2) + "×" : "—";
+  const poasEl = $("kPoas");
+  poasEl.className = poas >= 1 ? "good" : "bad";
+
+  const max = Math.max(f.std, f.intl, f.prem, 0.01);
+  $("barStd").style.width = (f.std / max * 100) + "%";
+  $("barIntl").style.width = (f.intl / max * 100) + "%";
+  $("barPrem").style.width = (f.prem / max * 100) + "%";
+  $("barFix").style.width = (0.30 / max * 100) + "%";
+  $("vStd").textContent = money(f.std);
+  $("vIntl").textContent = money(f.intl);
+  $("vPrem").textContent = money(f.prem);
+  $("vFix").textContent = money(0.30);
+
+  const plan = PLANS[state.plan];
+  const sub = state.cycle === "yearly" ? plan.yearly : plan.monthly;
+  const monthlyRevenue = revenue * orders;
+  const monthlyFee = f.fee * orders;
+  const monthlyCost = productCost * orders;
+  const monthlyAds = adspend;
+  const monthlyNet = monthlyRevenue - monthlyFee - monthlyCost - monthlyAds - sub;
+
+  $("mRev").textContent = money(monthlyRevenue);
+  $("mFee").textContent = money(monthlyFee);
+  $("mCost").textContent = money(monthlyCost);
+  $("mAds").textContent = money(monthlyAds);
+  $("mSub").textContent = money(sub);
+  $("mNet").textContent = money(monthlyNet);
+  $("planName").textContent = state.plan;
+  $("cycleName").textContent = state.cycle === "yearly" ? "billed yearly" : "monthly";
+
+  const breakEvenRevenue = adPerOrder > 0 ? adPerOrder / (margin > 0 ? margin : 1) : 0;
+  const verdict = $("verdict");
+  if (!Number.isFinite(bep) || margin <= 0) {
+    verdict.innerHTML = "This order does not cover its own costs. Fix the price or the COGS before testing ads.";
+  } else if (roas >= bep) {
+    verdict.innerHTML = "At a <b>" + roas.toFixed(2) + "×</b> blended ROAS each ad dollar returns <b>" +
+      poas.toFixed(2) + "×</b> in profit. Break-even is <b>" + bep.toFixed(2) + "×</b> — you are above it.";
+  } else {
+    verdict.innerHTML = "At a <b>" + roas.toFixed(2) + "×</b> blended ROAS each ad dollar returns <b>" +
+      poas.toFixed(2) + "×</b> in profit. Break-even is <b>" + bep.toFixed(2) + "×</b> — you need <b>" +
+      money(breakEvenRevenue) + "</b> of revenue per order to break even on ads.";
+  }
+
+  window.__calc = {fee: f.fee, contribution, margin, bep, poas, monthlyNet, plan: state.plan};
+}
+
+document.querySelectorAll("#planGroup button").forEach((b) => {
+  b.addEventListener("click", () => {
+    state.plan = b.dataset.plan;
+    document.querySelectorAll("#planGroup button").forEach((x) =>
+      x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    calculate();
+  });
+});
+document.querySelectorAll(".cycle button").forEach((b) => {
+  b.addEventListener("click", () => {
+    state.cycle = b.dataset.cycle;
+    document.querySelectorAll(".cycle button").forEach((x) =>
+      x.setAttribute("aria-pressed", x === b ? "true" : "false"));
+    calculate();
+  });
+});
+
+const themeBtn = $("themeBtn");
+function setTheme(t) {
+  document.documentElement.dataset.theme = t;
+  themeBtn.textContent = t === "dark" ? "Light mode" : "Dark mode";
+  try { localStorage.setItem("sw-theme", t); } catch (e) {}
+}
+themeBtn.addEventListener("click", () => {
+  setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark");
+});
+try {
+  const saved = localStorage.getItem("sw-theme");
+  if (saved) setTheme(saved);
+  else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
+} catch (e) {}
+
+document.querySelectorAll("input").forEach((el) => el.addEventListener("input", calculate));
+calculate();
+</script>
+</body>
+</html>
